@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var searchViewModel: SearchViewModel
+    private let userDetailService: UserDetailsService
+
+    init() {
+        let usersService = UsersServiceImpl()
+        _searchViewModel = StateObject(wrappedValue: SearchViewModel(usersService: usersService))
+        userDetailService = UserDetailsServiceImpl()
+    }
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            SearchView(
+                searchViewModel: searchViewModel,
+                userDetailsService: userDetailService
+            )
+            .navigationTitle("GitHub Users")
         }
-        .padding()
     }
 }
 
