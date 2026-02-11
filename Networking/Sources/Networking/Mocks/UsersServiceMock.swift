@@ -1,14 +1,15 @@
 //
 //  UsersServiceMock.swift
-//  ui train
-//
-//  Created by Ben Romdhane on 04/02/2026.
+//  Networking
 //
 
 import Foundation
+import Entities
 
-final class UsersServiceMock: UsersService {
-    func fetchUsers(query: String) async throws -> [UserSummary] {
+public final class UsersServiceMock: UsersService {
+    public init() {}
+    
+    public func fetchUsers(query: String) async throws -> [UserSummary] {
         return [
             UserSummary(id: 1, login: "aymen", avatarUrl: URL(string: "https://example.com")!)
         ]

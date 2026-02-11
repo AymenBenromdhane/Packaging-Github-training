@@ -1,34 +1,30 @@
 //
-//  UsersService.swift
-//  ui train
-//
-//  Created by Ben Romdhane on 04/02/2026.
+//  UserDetailsService.swift
+//  Networking
 //
 
 import Foundation
+import Entities
 
-protocol UsersService {
-    func fetchUsers(query: String) async throws -> [UserSummary]
+public protocol UserDetailsService {
+    func fetchUserDetails(login: String) async throws -> UserDetails
 }
 
-final class UsersServiceImpl: UsersService {
-
+public final class UserDetailsServiceImpl: UserDetailsService {
+    
     private let session: URLSession
     private let decoder: JSONDecoder
 
-    init(session: URLSession = .shared) {
+    public init(session: URLSession = .shared) {
         self.session = session
         self.decoder = JSONDecoder()
     }
 
-    func fetchUsers(query: String) async throws -> [UserSummary] {
+    public func fetchUserDetails(login: String) async throws -> UserDetails {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.github.com"
-        components.path = "/search/users"
-        components.queryItems = [
-            URLQueryItem(name: "q", value: query)
-        ]
+        components.path = "/users/\(login)"
 
         guard let url = components.url else {
             throw NetworkError.invalidURL
@@ -50,8 +46,8 @@ final class UsersServiceImpl: UsersService {
         }
 
         do {
-            let searchResponse = try decoder.decode(SearchResponse.self, from: data)
-            return searchResponse.items
+            let userDetails = try decoder.decode(UserDetails.self, from: data)
+            return userDetails
         } catch {
             throw NetworkError.decoding(error)
         }

@@ -1,19 +1,17 @@
 //
 //  NetworkError.swift
-//  ui train
-//
-//  Created by Ben Romdhane on 10/02/2026.
+//  Networking
 //
 
 import Foundation
 
-enum NetworkError: Error, LocalizedError {
+public enum NetworkError: Error, LocalizedError {
     case invalidURL
     case invalidResponse
     case httpStatus(Int)
     case decoding(Error)
 
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .invalidURL:
             return "URL invalide."

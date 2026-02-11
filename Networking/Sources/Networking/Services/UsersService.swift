@@ -1,30 +1,33 @@
 //
-//  UserDetailsService.swift
-//  ui train
-//
-//  Created by Ben Romdhane on 04/02/2026.
+//  UsersService.swift
+//  Networking
 //
 
 import Foundation
+import Entities
 
-protocol UserDetailsService {
-    func fetchUserDetails(login: String) async throws -> UserDetails
+public protocol UsersService {
+    func fetchUsers(query: String) async throws -> [UserSummary]
 }
 
-class UserDetailsServiceImpl: UserDetailsService {
-    var session: URLSession
-    var decoder: JSONDecoder
+public final class UsersServiceImpl: UsersService {
 
-    init(session: URLSession = .shared) {
+    private let session: URLSession
+    private let decoder: JSONDecoder
+
+    public init(session: URLSession = .shared) {
         self.session = session
-        decoder = JSONDecoder()
+        self.decoder = JSONDecoder()
     }
 
-    func fetchUserDetails(login: String) async throws -> UserDetails {
+    public func fetchUsers(query: String) async throws -> [UserSummary] {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.github.com"
-        components.path = "/users/\(login)"
+        components.path = "/search/users"
+        components.queryItems = [
+            URLQueryItem(name: "q", value: query)
+        ]
 
         guard let url = components.url else {
             throw NetworkError.invalidURL
@@ -46,8 +49,8 @@ class UserDetailsServiceImpl: UserDetailsService {
         }
 
         do {
-            let userDetails = try decoder.decode(UserDetails.self, from: data)
-            return userDetails
+            let searchResponse = try decoder.decode(SearchResponse.self, from: data)
+            return searchResponse.items
         } catch {
             throw NetworkError.decoding(error)
         }

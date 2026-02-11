@@ -7,6 +7,8 @@
 
 import Foundation
 import Combine
+import Entities
+import Networking
 
 @MainActor
 class SearchDetailsViewModel: ObservableObject {
@@ -22,6 +24,7 @@ class SearchDetailsViewModel: ObservableObject {
 
     func fetchUserDetails(login: String) async {
         guard !login.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+        
         isLoading = true
         errorMessage = nil
 
@@ -29,7 +32,7 @@ class SearchDetailsViewModel: ObservableObject {
             detail = try await userDetailsService.fetchUserDetails(login: login)
         } catch {
             detail = nil
-            errorMessage = "Failed to fetch user details"
+            errorMessage = "Failed to fetch user details: \(error.localizedDescription)"
         }
         isLoading = false
     }

@@ -7,6 +7,8 @@
 
 import Foundation
 import Combine
+import Entities
+import Networking
 
 @MainActor
 final class SearchViewModel: ObservableObject {

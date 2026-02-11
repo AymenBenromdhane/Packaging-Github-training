@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Networking
+import Entities
 
 struct ContentView: View {
     @StateObject private var searchViewModel: SearchViewModel

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Networking
+import Entities
 
 struct SearchView: View {
     @ObservedObject var searchViewModel: SearchViewModel
@@ -47,5 +49,5 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView(searchViewModel: SearchViewModel(usersService: UsersServiceMock()), userDetailsService: UserDetailServiceMock())
+    SearchView(searchViewModel: SearchViewModel(usersService: UsersServiceImpl()), userDetailsService: UserDetailsServiceImpl())
 }
