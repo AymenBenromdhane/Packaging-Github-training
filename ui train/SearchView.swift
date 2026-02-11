@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Domain
+import Data
 import Networking
-import Entities
 
 struct SearchView: View {
     @ObservedObject var searchViewModel: SearchViewModel
-    let userDetailsService: UserDetailsService
+    let getUserDetailsUseCase: GetUserDetailsUseCase
 
     var body: some View {
         VStack {
@@ -28,7 +29,10 @@ struct SearchView: View {
             if searchViewModel.isLoading { ProgressView() }
             List(searchViewModel.usersList) { user in
                 NavigationLink {
-                    SearchDetailsView(searchDetailsViewModel: SearchDetailsViewModel(userDetailsService: userDetailsService), login: user.login)
+                    SearchDetailsView(
+                        searchDetailsViewModel: SearchDetailsViewModel(getUserDetailsUseCase: getUserDetailsUseCase),
+                        login: user.login
+                    )
                 } label: {
                     HStack {
                         AsyncImage(url: user.avatarUrl) { image in
@@ -49,5 +53,15 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView(searchViewModel: SearchViewModel(usersService: UsersServiceImpl()), userDetailsService: UserDetailsServiceImpl())
+    let networkClient = NetworkClientImpl()
+    let dataSource = UsersRemoteDataSourceImpl(networkClient: networkClient)
+    let usersRepo = UsersRepositoryImpl(remoteDataSource: dataSource)
+    let userDetailsRepo = UserDetailsRepositoryImpl(remoteDataSource: dataSource)
+    let searchUseCase = SearchUsersUseCaseImpl(repository: usersRepo)
+    let detailsUseCase = GetUserDetailsUseCaseImpl(repository: userDetailsRepo)
+    
+    return SearchView(
+        searchViewModel: SearchViewModel(searchUsersUseCase: searchUseCase),
+        getUserDetailsUseCase: detailsUseCase
+    )
 }

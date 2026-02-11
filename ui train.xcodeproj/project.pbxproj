@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		F80240ED2F3CD3B000891AE1 /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = F80240EC2F3CD3B000891AE1 /* DesignSystem */; };
 		F80240F02F3CD49D00891AE1 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = F80240EF2F3CD49D00891AE1 /* Networking */; };
+		F8C4E5482F3CDEE3007F5057 /* Domain in Frameworks */ = {isa = PBXBuildFile; productRef = F8C4E5472F3CDEE3007F5057 /* Domain */; };
+		F8C4E54B2F3CDEF2007F5057 /* Data in Frameworks */ = {isa = PBXBuildFile; productRef = F8C4E54A2F3CDEF2007F5057 /* Data */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +30,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8C4E5482F3CDEE3007F5057 /* Domain in Frameworks */,
 				F80240F02F3CD49D00891AE1 /* Networking in Frameworks */,
+				F8C4E54B2F3CDEF2007F5057 /* Data in Frameworks */,
 				F80240ED2F3CD3B000891AE1 /* DesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -74,6 +78,8 @@
 			packageProductDependencies = (
 				F80240EC2F3CD3B000891AE1 /* DesignSystem */,
 				F80240EF2F3CD49D00891AE1 /* Networking */,
+				F8C4E5472F3CDEE3007F5057 /* Domain */,
+				F8C4E54A2F3CDEF2007F5057 /* Data */,
 			);
 			productName = "ui train";
 			productReference = 8C74CD9C2F3387AA00268ACC /* ui train.app */;
@@ -106,6 +112,8 @@
 			packageReferences = (
 				F80240EB2F3CD3B000891AE1 /* XCLocalSwiftPackageReference "DesignSystem" */,
 				F80240EE2F3CD49D00891AE1 /* XCLocalSwiftPackageReference "Networking" */,
+				F8C4E5462F3CDEE3007F5057 /* XCLocalSwiftPackageReference "Domain" */,
+				F8C4E5492F3CDEF2007F5057 /* XCLocalSwiftPackageReference "Data" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8C74CD9D2F3387AA00268ACC /* Products */;
@@ -368,6 +376,14 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Networking;
 		};
+		F8C4E5462F3CDEE3007F5057 /* XCLocalSwiftPackageReference "Domain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Domain;
+		};
+		F8C4E5492F3CDEF2007F5057 /* XCLocalSwiftPackageReference "Data" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Data;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -378,6 +394,14 @@
 		F80240EF2F3CD49D00891AE1 /* Networking */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Networking;
+		};
+		F8C4E5472F3CDEE3007F5057 /* Domain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Domain;
+		};
+		F8C4E54A2F3CDEF2007F5057 /* Data */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Data;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

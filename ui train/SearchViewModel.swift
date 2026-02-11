@@ -7,32 +7,32 @@
 
 import Foundation
 import Combine
-import Entities
-import Networking
+import Domain
 
 @MainActor
 final class SearchViewModel: ObservableObject {
-    private var usersService: UsersService
+    private let searchUsersUseCase: SearchUsersUseCase
+    
     @Published var query: String = ""
-    @Published var usersList: [UserSummary] = []
+    @Published var usersList: [User] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
 
-    init(usersService: UsersService) {
-        self.usersService = usersService
+    init(searchUsersUseCase: SearchUsersUseCase) {
+        self.searchUsersUseCase = searchUsersUseCase
     }
 
     func seachUsers() async {
-        guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
-
         isLoading = true
         errorMessage = nil
+        
         do {
-            usersList = try await usersService.fetchUsers(query: query)
+            usersList = try await searchUsersUseCase.execute(query: query)
         } catch {
             usersList = []
-            errorMessage = "Failed to fetch users"
+            errorMessage = error.localizedDescription
         }
+        
         isLoading = false
     }
 }

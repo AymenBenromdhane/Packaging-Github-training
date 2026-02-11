@@ -4,28 +4,28 @@
 import PackageDescription
 
 let package = Package(
-    name: "Networking",
+    name: "Domain",
     platforms: [
         .iOS(.v16),
         .macOS(.v13)
     ],
     products: [
         .library(
-            name: "Networking",
-            targets: ["Networking"]
+            name: "Domain",
+            targets: ["Domain"]
         ),
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Networking",
+            name: "Domain",
             dependencies: [],
-            path: "Sources/Networking"
+            path: "Sources/Domain"
         ),
         .testTarget(
-            name: "NetworkingTests",
-            dependencies: ["Networking"],
-            path: "Tests/NetworkingTests"
+            name: "DomainTests",
+            dependencies: ["Domain"],
+            path: "Tests/DomainTests"
         ),
     ]
 )

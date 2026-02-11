@@ -1,6 +1,5 @@
 import XCTest
 @testable import Networking
-import Entities
 
 final class NetworkingTests: XCTestCase {
     

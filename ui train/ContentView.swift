@@ -6,24 +6,37 @@
 //
 
 import SwiftUI
+import Domain
+import Data
 import Networking
-import Entities
 
 struct ContentView: View {
     @StateObject private var searchViewModel: SearchViewModel
-    private let userDetailService: UserDetailsService
+    private let getUserDetailsUseCase: GetUserDetailsUseCase
 
     init() {
-        let usersService = UsersServiceImpl()
-        _searchViewModel = StateObject(wrappedValue: SearchViewModel(usersService: usersService))
-        userDetailService = UserDetailsServiceImpl()
+        // Infrastructure Layer
+        let networkClient = NetworkClientImpl()
+        
+        // Data Layer
+        let dataSource = UsersRemoteDataSourceImpl(networkClient: networkClient)
+        let usersRepository = UsersRepositoryImpl(remoteDataSource: dataSource)
+        let userDetailsRepository = UserDetailsRepositoryImpl(remoteDataSource: dataSource)
+        
+        // Domain Layer
+        let searchUsersUseCase = SearchUsersUseCaseImpl(repository: usersRepository)
+        let getUserDetailsUseCase = GetUserDetailsUseCaseImpl(repository: userDetailsRepository)
+        
+        // Presentation Layer
+        _searchViewModel = StateObject(wrappedValue: SearchViewModel(searchUsersUseCase: searchUsersUseCase))
+        self.getUserDetailsUseCase = getUserDetailsUseCase
     }
 
     var body: some View {
         NavigationStack {
             SearchView(
                 searchViewModel: searchViewModel,
-                userDetailsService: userDetailService
+                getUserDetailsUseCase: getUserDetailsUseCase
             )
             .navigationTitle("GitHub Users")
         }

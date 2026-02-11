@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import Domain
+import Data
 import Networking
-import Entities
 
 struct SearchDetailsView: View {
     @StateObject var searchDetailsViewModel: SearchDetailsViewModel
@@ -96,5 +97,14 @@ struct SearchDetailsView: View {
 }
 
 #Preview {
-    SearchDetailsView(searchDetailsViewModel: SearchDetailsViewModel(userDetailsService: UserDetailsServiceImpl()), login: "aymen")
+    // Construction manuelle des dépendances pour le preview
+    let networkClient = NetworkClientImpl()
+    let dataSource = UsersRemoteDataSourceImpl(networkClient: networkClient)
+    let userDetailsRepo = UserDetailsRepositoryImpl(remoteDataSource: dataSource)
+    let detailsUseCase = GetUserDetailsUseCaseImpl(repository: userDetailsRepo)
+    
+    return SearchDetailsView(
+        searchDetailsViewModel: SearchDetailsViewModel(getUserDetailsUseCase: detailsUseCase),
+        login: "aymen"
+    )
 }

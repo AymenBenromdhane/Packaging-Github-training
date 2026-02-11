@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Networking - Infrastructure réseau (Clean Architecture)
-public enum Networking {
+/// Data - Couche données (Clean Architecture)
+public enum Data {
     public static let version = "1.0.0"
 }

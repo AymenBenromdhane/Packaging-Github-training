@@ -3,7 +3,7 @@
 
 import Foundation
 
-/// Networking - Infrastructure réseau (Clean Architecture)
-public enum Networking {
+/// Domain - Couche métier (Clean Architecture)
+public enum Domain {
     public static let version = "1.0.0"
 }

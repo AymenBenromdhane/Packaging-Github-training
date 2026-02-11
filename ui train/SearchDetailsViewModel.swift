@@ -7,33 +7,31 @@
 
 import Foundation
 import Combine
-import Entities
-import Networking
+import Domain
 
 @MainActor
 class SearchDetailsViewModel: ObservableObject {
-    var userDetailsService: UserDetailsService
-    @Published var login: String = ""
-    @Published var detail: UserDetails?
+    private let getUserDetailsUseCase: GetUserDetailsUseCase
+    
+    @Published var detail: UserDetail?
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
 
-    init(userDetailsService: UserDetailsService) {
-        self.userDetailsService = userDetailsService
+    init(getUserDetailsUseCase: GetUserDetailsUseCase) {
+        self.getUserDetailsUseCase = getUserDetailsUseCase
     }
 
     func fetchUserDetails(login: String) async {
-        guard !login.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
-        
         isLoading = true
         errorMessage = nil
 
         do {
-            detail = try await userDetailsService.fetchUserDetails(login: login)
+            detail = try await getUserDetailsUseCase.execute(login: login)
         } catch {
             detail = nil
-            errorMessage = "Failed to fetch user details: \(error.localizedDescription)"
+            errorMessage = error.localizedDescription
         }
+        
         isLoading = false
     }
 }
