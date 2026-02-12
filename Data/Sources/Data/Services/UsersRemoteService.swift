@@ -1,18 +1,18 @@
 //
-//  UsersRemoteDataSource.swift
+//  UsersRemoteService.swift
 //  Data
 //
 
 import Foundation
 import Networking
 
-/// DataSource - Récupération des utilisateurs depuis l'API
-public protocol UsersRemoteDataSource {
+/// Service - Récupération des utilisateurs depuis l'API
+public protocol UsersRemoteService {
     func searchUsers(query: String) async throws -> SearchResponseDTO
     func getUserDetails(login: String) async throws -> UserDetailsDTO
 }
 
-public final class UsersRemoteDataSourceImpl: UsersRemoteDataSource {
+public final class UsersRemoteServiceImpl: UsersRemoteService {
     private let networkClient: NetworkClient
     
     public init(networkClient: NetworkClient) {

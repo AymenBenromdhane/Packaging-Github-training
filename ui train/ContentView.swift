@@ -19,9 +19,9 @@ struct ContentView: View {
         let networkClient = NetworkClientImpl()
         
         // Data Layer
-        let dataSource = UsersRemoteDataSourceImpl(networkClient: networkClient)
-        let usersRepository = UsersRepositoryImpl(remoteDataSource: dataSource)
-        let userDetailsRepository = UserDetailsRepositoryImpl(remoteDataSource: dataSource)
+        let service = UsersRemoteServiceImpl(networkClient: networkClient)
+        let usersRepository = UsersRepositoryImpl(remoteService: service)
+        let userDetailsRepository = UserDetailsRepositoryImpl(remoteService: service)
         
         // Domain Layer
         let searchUsersUseCase = SearchUsersUseCaseImpl(repository: usersRepository)

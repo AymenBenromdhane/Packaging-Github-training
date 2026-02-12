@@ -99,8 +99,8 @@ struct SearchDetailsView: View {
 #Preview {
     // Construction manuelle des dépendances pour le preview
     let networkClient = NetworkClientImpl()
-    let dataSource = UsersRemoteDataSourceImpl(networkClient: networkClient)
-    let userDetailsRepo = UserDetailsRepositoryImpl(remoteDataSource: dataSource)
+    let service = UsersRemoteServiceImpl(networkClient: networkClient)
+    let userDetailsRepo = UserDetailsRepositoryImpl(remoteService: service)
     let detailsUseCase = GetUserDetailsUseCaseImpl(repository: userDetailsRepo)
     
     return SearchDetailsView(

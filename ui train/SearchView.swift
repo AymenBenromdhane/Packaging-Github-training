@@ -54,9 +54,9 @@ struct SearchView: View {
 
 #Preview {
     let networkClient = NetworkClientImpl()
-    let dataSource = UsersRemoteDataSourceImpl(networkClient: networkClient)
-    let usersRepo = UsersRepositoryImpl(remoteDataSource: dataSource)
-    let userDetailsRepo = UserDetailsRepositoryImpl(remoteDataSource: dataSource)
+    let service = UsersRemoteServiceImpl(networkClient: networkClient)
+    let usersRepo = UsersRepositoryImpl(remoteService: service)
+    let userDetailsRepo = UserDetailsRepositoryImpl(remoteService: service)
     let searchUseCase = SearchUsersUseCaseImpl(repository: usersRepo)
     let detailsUseCase = GetUserDetailsUseCaseImpl(repository: userDetailsRepo)
     
